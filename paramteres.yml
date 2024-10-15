@@ -1,0 +1,41 @@
+all_parameters:
+  Labd: 43
+  beta_c:  0.025
+  lamb_sigm: 0.0004
+  mu: 0.0139
+  k: 0.05
+  k*: 0.25 
+  d: 0.1  
+  d*: 0.2 
+  f: 0.5
+  r1: 3
+  r2: 1
+  r*: 3
+  alpha1: 0.1
+  alpha2: 0.2
+  alpha3: 0.5
+  N: 4315.759 #sverdlovsk
+  w1: 1
+  w2: 1
+  w3: 1
+  w4: 1
+  J20: 1.
+  k2: 1
+
+indeces2estim:
+  a: 1 # beta c
+  b: 2 # lamb sigm
+  c: 4 # k
+  d: 5 # k*
+  e: 9 # r1
+  f: 10 # r2
+  g: 11 # r*
+  #h: 12 # alpha1
+  #j: 13 # alpha2
+  #k: 14 # # alpha3
+  #w1: 16
+  #w2: 17
+  #w3: 18
+  #w4: 19
+  J20: 20
+  k2: 21
