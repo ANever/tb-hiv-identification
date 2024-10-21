@@ -49,7 +49,7 @@ def region_df(reg_name = '', df = full_df, df_e = None):
 regions = np.unique(full_df['регион'])
 
 #cycle through "regions" to estimate parameters for all regions or place list of needed region names
-for region in ['Свердловская обл.']: # for region in ['regions']:
+for region in ['Свердловская обл.', 'Московская обл.']: # for region in ['regions']:
     try:
         output(region)
         df_region = region_df(region)
