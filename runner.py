@@ -3,7 +3,7 @@ import yaml
 import matplotlib.pyplot as plt
 import pandas as pd
 from copy import deepcopy as copy
-from model import rungekutta4, Data, ode_objective, ode_rk4
+from model import Data, ode_objective, ode_rk4
 from optuna_optimiser import run_optuna
 
 import sqlite3
@@ -12,9 +12,9 @@ with open("paramteres.yml", "r", encoding="utf8") as file:
     p = yaml.safe_load(file)
 
 
-# def output(string: str):
-#    with open("output.txt", "a") as file:
-#        file.write(string + "\n")
+def output(string: str):
+    with open("output.txt", "a") as file:
+        file.write(string + "\n")
 
 
 db_filename = "tuberculosis.db"
@@ -121,6 +121,8 @@ try:
 
     short_titles = ["(I)", "(J1)", "(J3)"]
 
+    eq_ind = [0, 1]
+
     syn_data = inverse_problem_data.data
     year_step = 1
     start_point = 0
@@ -128,11 +130,11 @@ try:
     end_year = st_year + int(np.floor(T) + 1)
     for g in range(len(eq_ind)):
         plt.figure(figsize=(10, 6))
-        i, j, _ = optuna.shape
+        i, j, _ = optuna.data.shape
 
         plt.plot(
             np.arange(j),
-            optuna[eq_ind[g]],
+            optuna.data[eq_ind[g]],
             label="Modelling result",
             linewidth=3,
             linestyle="dashed",
@@ -140,7 +142,7 @@ try:
         )
         plt.plot(
             np.arange(j),
-            optuna_better_treat[eq_ind[g]],
+            optuna_better_treat.data[eq_ind[g]],
             label="Better treatment",
             linewidth=3,
             linestyle="dashed",
@@ -148,34 +150,22 @@ try:
         )
         plt.plot(
             np.arange(j),
-            optuna_worse_treat[eq_ind[g]],
+            optuna_worse_treat.data[eq_ind[g]],
             label="Worse treatment",
             linewidth=3,
             linestyle="dashed",
             color="#f56d33",
         )
 
-        try:
-            new_p = np.array(points[0]) * int(j / T)
-            plt.scatter(
-                new_p,
-                real_data[g][start_point : start_point + len(new_p)],
-                label="Train data",
-                linewidth=4,
-                color="black",
-            )
-            new_p2 = np.array(rest_points[0]) * int(j / T)
-            plt.scatter(
-                new_p2,
-                real_data[g][
-                    start_point + len(new_p) : start_point + len(new_p) + len(new_p2)
-                ],
-                label="Test data",
-                linewidth=4,
-                color="red",
-            )
-        except:
-            pass
+        new_p = np.array(points[0]) * int(j / T)
+        plt.scatter(
+            new_p,
+            inverse_problem_data.data[g][start_point : start_point + len(new_p)],
+            label="Train data",
+            linewidth=4,
+            color="black",
+        )
+
         plt.legend(fontsize=12)
 
         plt.xticks(
@@ -208,5 +198,5 @@ try:
 
     for i in range(len(optuna_P)):
         print(P_names[i], " : ", optuna_P[i])
-except:
+except ValueError:
     output("region_failed\n")
