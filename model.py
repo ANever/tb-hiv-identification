@@ -5,8 +5,8 @@ from dataclasses import dataclass
 
 @dataclass
 class Data:
-    keys: list
-    points: list  # np.ndarray
+    keys: np.ndarray  # list
+    points: np.ndarray  # list  # np.ndarray
     data: np.ndarray
 
 

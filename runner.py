@@ -3,7 +3,7 @@ import yaml
 import matplotlib.pyplot as plt
 import pandas as pd
 from copy import deepcopy as copy
-from model import TB_HIV_model, rungekutta4, TB_rk4, Data, objective, ode_objective
+from model import rungekutta4, Data, ode_objective, ode_rk4
 from optuna_optimiser import run_optuna
 
 import sqlite3
@@ -74,18 +74,6 @@ for key in initial_state.keys():
     initial_state[key] *= pop
 
 model_kwargs = {
-    "model": TB_rk4,
-    "init_x": initial_state,
-    "t0": 2009,
-    "T": T,
-    "data_ex": inverse_problem_data,
-    "default_params": params,
-    "objective": objective,
-    "estimation_bounds": estimation_bounds,
-}
-
-
-model_kwargs_new = {
     "init_x": initial_state,
     "t0": 2009,
     "T": T,
@@ -97,27 +85,16 @@ model_kwargs_new = {
     "custom_vars": p["custom_vars"],
 }
 
-# regions = np.unique(full_df["регион"])
-
-# cycle through "regions" to estimate parameters for all regions or place list of needed region names
 # for region in ["Свердловская обл.", "Московская обл."]:  # for region in ['regions']:
 try:
     print("Optuna run")
-    optuna_dict, best_val = run_optuna(**model_kwargs_new)
+    optuna_dict, best_val = run_optuna(**model_kwargs)
 
-    # _optuna_P = np.array(list(optuna_dict.values()))
     optuna_P = P_exact.copy()
     for key in estimation_bounds.keys():
         optuna_P[key] = optuna_dict[key]
 
     print("Start plotting")
-
-    optuna = rungekutta4(
-        TB_HIV_model,
-        optuna_P,
-        initial_state,
-        T,
-    )
 
     optuna_Pb = copy(optuna_P)
     optuna_Pw = copy(optuna_P)
@@ -125,21 +102,13 @@ try:
     optuna_Pb[10] *= 1.1
     optuna_Pw[10] *= 0.9
 
-    optuna_better_treat = rungekutta4(
-        TB_HIV_model,
-        optuna_Pb,
-        initial_state,
-        T,
-    )
+    optuna = ode_rk4(params=optuna_P, **model_kwargs)
 
-    optuna_worse_treat = rungekutta4(
-        TB_HIV_model,
-        optuna_Pw,
-        initial_state,
-        T,
-    )
+    optuna_better_treat = ode_rk4(params=optuna_Pb, **model_kwargs)
 
-    finish_state = optuna[:, -1].T[0]
+    optuna_worse_treat = ode_rk4(params=optuna_P, **model_kwargs)
+
+    finish_state = optuna.data[:, -1].T[0]
 
     model_kwargs["init_x"] = finish_state
     Y0 = finish_state
@@ -152,8 +121,9 @@ try:
 
     short_titles = ["(I)", "(J1)", "(J3)"]
 
-    syn_data = syn_data.data
+    syn_data = inverse_problem_data.data
     year_step = 1
+    start_point = 0
     st_year = 2009 + start_point
     end_year = st_year + int(np.floor(T) + 1)
     for g in range(len(eq_ind)):
