@@ -1,0 +1,308 @@
+Свердловская обл.
+2009-2023
+{'1': 99.6600483677844, '2': 4.813890579009334, '4': 0.05000402751509959, '5': 1.9946392264756418, '9': 0.2084074200489232, '10': 1.5066198404236661, '11': 0.7682854246128115, '20': 78.12168367484435, '21': 0.17600982837711873}
+
+Московская обл.
+2009-2023
+{'1': 96.05911270958941, '2': 3.2781199770943488, '4': 0.05088944473005166, '5': 1.7837521045067115, '9': 0.12507934634694196, '10': 1.9451302576265221, '11': 0.5691657927028633, '20': 22.708949134673258, '21': 0.20620191146830336}
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
+Свердловская обл.
+region_failed
+
+Московская обл.
+region_failed
+
