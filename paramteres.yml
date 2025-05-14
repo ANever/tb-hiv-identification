@@ -5,17 +5,19 @@ db_keys:
   J1: 6
   N: 28
 
+model_kwargs:
 #ODE model right side
-equations:
-  S: "Lambd - beta_c*S*(I+J3)/N - lambd_sigma*S*JR - mu*S + r1*I"
-  I: "beta_c*S*(I+J3)/N-(mu+d+r1)*I"
-  J1: "lambd_sigma*S*JR - beta_c*J1*(I+J3)/N - (alpha1+mu)*J1"
-  J3: "beta_c*J1*(I+J3)/N - (alpha3+mu+d_star+r_star)*J3"
-  A: "alpha1*J1 + alpha3*J3 - (mu+f)*A"
-
+  equation_strings:
+    S: "N*Lambd - beta_c*S*(I+J3)/N - lambd_sigma*S*(J1+J3)/N - mu*S + r1*I"
+    I: "beta_c*S*(I+J3)/N-(mu+d+r1)*I"
+    J1: "lambd_sigma*S*(J1+J3)/N - beta_c*J1*(I+J3)/N - (mu)*J1"
+    J3: "beta_c*J1*(I+J3)/N - (mu+d_star)*J3"
+      #A: '0'
 #ODE model aliases
-custom_vars:
-  JR: "(S+J1+J3)/(J3+A)"
+  custom_vars:
+    #JR: "(S+J1+J3)/(J3)"
+    #N: "S+I+J1+J3"
+    blank: '0'
 
 #ODE model initial state
 initial_state:
@@ -23,11 +25,11 @@ initial_state:
   I: 0.05
   J1: 0
   J3: 0.01
-  A: 0 
+    #A: 0 
 
 #parameters of ODE model, including default values for restored
 all_parameters:
-  Lambd: 43
+  Lambd: 0.01
   beta_c:  0.025
   lambd_sigma: 0.0004
   mu: 0.0139
@@ -38,16 +40,7 @@ all_parameters:
   f: 0.5
   r1: 3
   r2: 1
-  r_star: 3
-  alpha1: 0.1
-  alpha2: 0.2
-  alpha3: 0.5
-  N: 4315.759 #sverdlovsk
-  w1: 1
-  w2: 1
-  w3: 1
-  w4: 1
-    #J20: 1.
+  # N: 4315.759 #sverdlovsk
   k2: 1
 
 #keys of given data for inverse problem
@@ -59,18 +52,9 @@ passed_keys:
 estim_and_bounds:
   beta_c: [0, 1]
   lambd_sigma: [0, 1]
-  k: default
-  k_star: default
-  r1: default
-  r2: default
-  r_star: default
-  #alpha1
-  #alpha2
-  #alpha3
-  #w1
-  #w2
-  #w3
-  #w4
-  #J20: default 
-  k2: default
+    #k: default
+    #k_star: default
+  r1: [0,5]
+  r2: [0,5]
+  #k2: default
 

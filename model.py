@@ -1,5 +1,6 @@
 import numpy as np
 import copy as copy
+import sciris as sc
 from dataclasses import dataclass
 
 
@@ -8,6 +9,10 @@ class Data:
     keys: np.ndarray  # list
     points: np.ndarray  # list  # np.ndarray
     data: np.ndarray
+
+    def __getitem__(self, key):
+        ind = sc.findinds(self.keys, key)[0]
+        return Data(keys=key, points=self.points[ind], data=self.data[ind])
 
 
 default_step = 1 / 1200
@@ -49,6 +54,7 @@ def ode_model(
     params: dict = {},
     custom_vars: dict = {},
     t: float = 0,
+    **kwargs,
 ):
     ## input :
     # param - system parameters
