@@ -11,9 +11,11 @@ class Data:
     data: np.ndarray
 
     def __getitem__(self, key):
-        ind = sc.findinds(self.keys, key)[0]
-        return Data(keys=key, points=self.points[ind], data=self.data[ind])
-
+        if key.isinstance(str):
+            ind = sc.findinds(self.keys, key)[0]
+            return Data(keys=key, points=self.points[ind], data=self.data[ind])
+        else:
+            return Data(keys=self.keys[key], points=self.points[key], data=self.data[key])
 
 default_step = 1 / 1200
 
