@@ -2,7 +2,7 @@ import numpy as np
 import copy as copy
 import sciris as sc
 from dataclasses import dataclass
-
+import warnings
 
 @dataclass
 class Data:
@@ -26,7 +26,8 @@ def rungekutta4(func, init_x: dict, t_end: float, step: float = default_step, t_
     # param - system parameters
 
     # init_x - initial system values
-    # T - time-end
+    # t_start - time of start, where initial is set
+    # t_end - ending 
     # step - grid step
 
     ## output :
@@ -34,20 +35,23 @@ def rungekutta4(func, init_x: dict, t_end: float, step: float = default_step, t_
     T = t_end - t_start
     Nt = int(T / step)
     if Nt<0:
-        raise Error('Wrong step direction')
+        step = -step
+        Nt = -Nt
+        warnings.warn('RK4: Check the step direction and start/end times. Automaticaly reversed step direction.')
+        #raise Error('Wrong step direction')
     # init_val_temp = np.fromiter(init_x.values(), np.float32)
     init_val_temp = init_x
     keys = init_x.keys()
     result = np.zeros((len(init_x), Nt + 1))
     result[:, 0] = np.fromiter(init_val_temp.values(), np.float32)
     for j in range(1, Nt + 1):
-        a1 = step * func(system_state=init_val_temp, t=j * step, **kwargs)
+        a1 = step * func(system_state=init_val_temp, t=t_start+j * step, **kwargs)
         val_temp = dict(zip(keys, result[:, j - 1] + a1 * 0.5))
-        a2 = step * func(system_state=val_temp, t=(j + 0.5) * step, **kwargs)
+        a2 = step * func(system_state=val_temp, t=t_start+(j + 0.5) * step, **kwargs)
         val_temp = dict(zip(keys, result[:, j - 1] + a2 * 0.5))
-        a3 = step * func(system_state=val_temp, t=(j + 0.5) * step, **kwargs)
+        a3 = step * func(system_state=val_temp, t=t_start+(j + 0.5) * step, **kwargs)
         val_temp = dict(zip(keys, result[:, j - 1] + a3))
-        a4 = step * func(system_state=val_temp, t=(j + 1.0) * step, **kwargs)
+        a4 = step * func(system_state=val_temp, t=t_start+(j + 1.0) * step, **kwargs)
         result[:, j] = result[:, j - 1] + (a1 + 2 * a2 + 2 * a3 + a4) / 6
     return result
 
@@ -69,7 +73,7 @@ def ode_model(
 
     ### TB+HIV model ####
     _custom_vars = copy.copy(custom_vars)
-    aliases_dict = params | system_state | {"t": t}
+    aliases_dict = params | system_state | {"t": t} | kwargs | {"sc":sc}
     for key in _custom_vars.keys():
         _custom_vars[key] = eval(_custom_vars[key], aliases_dict)
     result = np.zeros(len(equation_strings))

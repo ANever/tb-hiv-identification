@@ -23,6 +23,20 @@ model_kwargs:
     #N: "S+I+J1+J3"
     blank: '0'
 
+
+adj_model_kwargs:
+#ODE model right side
+  equation_strings:
+    S: "(S+I+J1+J3)*mu + d_star*J3 - beta_c*S*(I+J3)/N - lambd_sigma*S*(J1+J3)/N - mu*S + (r1+d)*I"
+    I: "beta_c*S*(I+J3)/N-(mu+d+r1)*I + (I1(t)+J31(t))*0.1"
+    J1: "lambd_sigma*S*(J1+J3)/N - beta_c*J1*(I+J3)/N - (mu)*J1"
+    J3: "beta_c*J1*(I+J3)/N - (d_star+mu)*J3"
+      #A: '0'
+#ODE model aliases
+  custom_vars:
+    #JR: "(S+J1+J3)/(J3)"
+    #N: "S+I+J1+J3"
+    blank: '0'
 #ODE model initial state
 initial_state:
   S: 0.95

@@ -5,6 +5,7 @@ import pandas as pd
 from copy import deepcopy as copy
 from model import Data, ode_objective, ode_rk4
 #from optuna_optimiser import run_optuna
+import sciris as sc
 
 import sqlite3
 
@@ -79,6 +80,7 @@ for region in all_regions[1:2]:
         "init_x": initial_state,
         "t_start": t_start,
         "t_end": t_end,
+        "step":1/1200,
         "data_ex": inverse_problem_data,
         "default_params": params,
         "estimation_bounds": estimation_bounds,
@@ -90,13 +92,30 @@ for region in all_regions[1:2]:
     #plt.scatter(a.points, a.data)
     #plt.show()
     
+    print('solved direct')
+    
+    
+    def data_as_func(data, key, t):
+        try:
+            i = sc.findinds(data[key].points, t,eps=1e-5)[0]
+        except IndexError:
+            raise IndexError("There is no data for time " + str(t))
+        return data[key].data[i]
+
+    data_as_func_dict = {}
+    for key in results.keys:
+        data_as_func_dict = data_as_func_dict | {key+'1': lambda t: data_as_func(results,key,t)}
+    
+    
     model_kwargs = {
         "init_x": initial_state,
         "t_start": t_end,
         "t_end": t_start,
         "step": -1/1200,
         "default_params": params,
-    } | p["model_kwargs"]
+        #"I1":data_as_func
+    } | p["adj_model_kwargs"] | data_as_func_dict
+    
     results = ode_rk4(params=params, **model_kwargs)
     a = results['I']
     plt.plot(a.points,a.data)
