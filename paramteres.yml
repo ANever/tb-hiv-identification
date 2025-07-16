@@ -8,10 +8,14 @@ db_keys:
 model_kwargs:
 #ODE model right side
   equation_strings:
-    S: "N*Lambd - beta_c*S*(I+J3)/N - lambd_sigma*S*(J1+J3)/N - mu*S + r1*I"
+    #S: "(S+I+J1+J3)*mu + J3*d_star - beta_c*S*(I+J3)/N - lambd_sigma*S*(J1+J3)/N - mu*S + (r1+d)*I"
+    #I: "beta_c*S*(I+J3)/N-(mu+d+r1)*I"
+    #J1: "lambd_sigma*S*(J1+J3)/N - beta_c*J1*(I+J3)/N - (mu)*J1"
+    #J3: "beta_c*J1*(I+J3)/N - (mu+d_star)*J3"
+    S: "(S+I+J1+J3)*mu + d_star*J3 - beta_c*S*(I+J3)/N - lambd_sigma*S*(J1+J3)/N - mu*S + (r1+d)*I"
     I: "beta_c*S*(I+J3)/N-(mu+d+r1)*I"
     J1: "lambd_sigma*S*(J1+J3)/N - beta_c*J1*(I+J3)/N - (mu)*J1"
-    J3: "beta_c*J1*(I+J3)/N - (mu+d_star)*J3"
+    J3: "beta_c*J1*(I+J3)/N - (d_star+mu)*J3"
       #A: '0'
 #ODE model aliases
   custom_vars:
@@ -38,10 +42,10 @@ all_parameters:
   d: 0.1  
   d_star: 0.2 
   f: 0.5
-  r1: 3
-  r2: 1
+  r1: 0.1
+  r2: 0.1
   # N: 4315.759 #sverdlovsk
-  k2: 1
+  k2: 0.1
 
 #keys of given data for inverse problem
 passed_keys:

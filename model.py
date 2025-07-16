@@ -11,7 +11,7 @@ class Data:
     data: np.ndarray
 
     def __getitem__(self, key):
-        if key.isinstance(str):
+        if isinstance(key,str):
             ind = sc.findinds(self.keys, key)[0]
             return Data(keys=key, points=self.points[ind], data=self.data[ind])
         else:
@@ -20,7 +20,7 @@ class Data:
 default_step = 1 / 1200
 
 
-def rungekutta4(func, init_x: dict, T: float, step: float = default_step, **kwargs):
+def rungekutta4(func, init_x: dict, t_end: float, step: float = default_step, t_start=0, **kwargs):
     ## input :
     # func(parameters, x_values) - function discribes the model
     # param - system parameters
@@ -31,13 +31,15 @@ def rungekutta4(func, init_x: dict, T: float, step: float = default_step, **kwar
 
     ## output :
     # result - system vaue on grid of time points
+    T = t_end - t_start
     Nt = int(T / step)
+    if Nt<0:
+        raise Error('Wrong step direction')
     # init_val_temp = np.fromiter(init_x.values(), np.float32)
     init_val_temp = init_x
     keys = init_x.keys()
     result = np.zeros((len(init_x), Nt + 1))
     result[:, 0] = np.fromiter(init_val_temp.values(), np.float32)
-
     for j in range(1, Nt + 1):
         a1 = step * func(system_state=init_val_temp, t=j * step, **kwargs)
         val_temp = dict(zip(keys, result[:, j - 1] + a1 * 0.5))
@@ -76,12 +78,12 @@ def ode_model(
     return np.array(result)
 
 
-def ode_rk4(params, init_x, T, t0=0, **kwargs):
+def ode_rk4(params, init_x, t_end, t_start=0, **kwargs):
     data = np.array(
-        rungekutta4(func=ode_model, params=params, init_x=init_x, T=T - t0, **kwargs)
+        rungekutta4(func=ode_model, params=params, init_x=init_x, t_end=t_end, t_start=t_start, **kwargs)
     )
     points = np.array([
-        np.linspace(t0, T, num=len(data[0]), endpoint=True) for _ in range(len(data))
+        np.linspace(t_start, t_end, num=len(data[0]), endpoint=True) for _ in range(len(data))
     ])
     keys = np.array(list(init_x.keys()))
     return Data(keys, points, data)
